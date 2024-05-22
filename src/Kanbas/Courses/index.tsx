@@ -24,16 +24,6 @@ export default function Courses() {
                 path="Assignments/:id"
                 element={<h3>Assignment Editor</h3>}
               />
-            </Routes>
-            <Routes>
-              <Route path="/" element={<Navigate to="Home" />} />
-              <Route path="Home" element={<Home />} />
-              <Route path="Modules" element={<Modules />} />
-              <Route path="Assignments" element={<Assignments />} />
-            </Routes>
-            <Routes>
-              <Route path="Home" element={<Home />} />
-              <Route path="Modules" element={<Modules />} />
               <Route path="Assignments" element={<Assignments />} />
               <Route path="Assignments/:id" element={<AssignmentEditor />} />
             </Routes>

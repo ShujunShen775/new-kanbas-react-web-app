@@ -5,7 +5,7 @@ export default function Dashboard() {
       <h2 id="wd-dashboard-published">Published Courses (12)</h2> <hr />
       <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/React.js.logo.webp" width={200} />
           <div>
             <a
               className="wd-dashboard-course-link"
