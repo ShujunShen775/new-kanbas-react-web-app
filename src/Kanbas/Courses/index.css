@@ -1,0 +1,9 @@
+nav {
+  --bs-breadcrumb-divider: ">";
+}
+
+.main-wrapper {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}

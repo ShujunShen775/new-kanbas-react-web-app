@@ -129,7 +129,7 @@ export default function Lab1() {
           />
           <br />
           <label htmlFor="wd-text-fields-first-name">First name:</label>
-          <input type="text" id="wd-text-fields-first-name" title="John" />{" "}
+          <input type="text" id="wd-text-fields-first-name" title="John" />
           <br />
           <label htmlFor="wd-text-fields-last-name">Last name:</label>
           <input
