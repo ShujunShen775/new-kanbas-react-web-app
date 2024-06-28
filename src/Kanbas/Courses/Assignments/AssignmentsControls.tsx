@@ -1,6 +1,10 @@
 import { FaPlus } from "react-icons/fa6";
 import InputSearch from "./InputSearch";
-export default function ModulesControls() {
+export default function AssignmentsControls({
+  addAssignment,
+}: {
+  addAssignment: () => void;
+}) {
   return (
     <div id="wd-assignment-controls container" className="text-nowrap">
       <div className="row">
@@ -10,7 +14,7 @@ export default function ModulesControls() {
         <div className="col">
           <div className="clearfix">
             <button
-              id="wd-add-module-btn"
+              id="wd-add-group-btn"
               className="btn btn-lg btn-secondary me-1 float-end"
             >
               <FaPlus
@@ -20,8 +24,9 @@ export default function ModulesControls() {
               Group
             </button>
             <button
-              id="wd-add-module-btn"
+              id="wd-add-assignment-btn"
               className="btn btn-lg btn-danger me-1 float-end"
+              onClick={addAssignment}
             >
               <FaPlus
                 className="position-relative me-2"
