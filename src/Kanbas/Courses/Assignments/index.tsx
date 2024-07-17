@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from "react";
 import AssignmentsControls from "./AssignmentsControls";
-import { deleteAssignment } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
+import * as client from "./client";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router";
@@ -13,7 +15,17 @@ export default function Assignments() {
   const dispatch = useDispatch();
 
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-
+  const removeAssignment = async (aid: string) => {
+    await client.deleteAssignment(aid);
+    dispatch(deleteAssignment(aid));
+  };
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
   return (
     <div id="wd-assignments">
       <AssignmentsControls
@@ -38,15 +50,14 @@ export default function Assignments() {
                     {assignment.title}
                     <br />
                     {assignment.description} | Not available util{" "}
-                    {assignment.available} | Due{" "}
-                    {assignment.until} |{" "}
+                    {assignment.available} | Due {assignment.until} |{" "}
                     {assignment.points}
                     pts
                   </div>
                   <AssignmentControlButtons
                     assignmentId={assignment._id}
                     deleteAssignment={(assignmentId) => {
-                      dispatch(deleteAssignment(assignmentId));
+                      removeAssignment(assignmentId);
                     }}
                     editAssignment={() =>
                       navigate(
