@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import AssignmentsControls from "./AssignmentsControls";
 import { deleteAssignment, setAssignments } from "./reducer";
 import * as client from "./client";

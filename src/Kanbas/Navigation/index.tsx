@@ -22,7 +22,7 @@ export default function KanbasNavigation() {
         className="list-group-item bg-black border-0"
         rel="noreferrer"
       >
-        <img src="/images/NEU.png" width="75px" />
+        <img src="/images/NEU.png" width="75px" alt="" />
       </a>
       <Link
         key="/Kanbas/Account"

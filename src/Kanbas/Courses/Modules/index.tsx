@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as client from "./client";
 import {
   addModule,
@@ -29,7 +29,7 @@ export default function Modules() {
     dispatch(deleteModule(moduleId));
   };
   const saveModule = async (module: any) => {
-    const status = await client.updateModule(module);
+    await client.updateModule(module);
     dispatch(updateModule(module));
   };
   const fetchModules = async () => {

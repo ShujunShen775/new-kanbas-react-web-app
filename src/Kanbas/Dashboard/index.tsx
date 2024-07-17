@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import * as db from "../Database";
+// import * as db from "../Database";
 import "./index.css";
 
 export default function Dashboard({
@@ -61,7 +60,7 @@ export default function Dashboard({
                 className="text-decoration-none"
               >
                 <div className="card rounded-3 overflow-hidden">
-                  <img src="/images/stacked.jpg" height="{160}" />
+                  <img src="/images/stacked.jpg" height="{160}" alt="" />
                   <div className="card-body">
                     <span
                       className="wd-dashboard-course-link"

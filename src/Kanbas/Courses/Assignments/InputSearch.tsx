@@ -1,4 +1,3 @@
-import { FaCheckCircle } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 export default function InputSearch() {
   return (

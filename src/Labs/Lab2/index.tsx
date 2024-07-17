@@ -1,17 +1,15 @@
 import "./index.css";
 import ReactIconsSampler from "./ReactIconsSampler";
 import ScreenSizeLabel from "./ScreenSizeLabel";
-import TOC from "./TOC";
 export default function Lab2() {
   return (
     <>
-      {/* <TOC /> */}
       <ReactIconsSampler />
       <ScreenSizeLabel />
       <div id="wd-css-navigating-with-cards">
         <h2>Cards</h2>
         <div className="card" style={{ width: "18rem" }}>
-          <img src="images/stacked.jpg" className="card-img-top" />
+          <img src="images/stacked.jpg" className="card-img-top" alt="" />
           <div className="card-body">
             <h5 className="card-title">Stacking Starship</h5>
             <p className="card-text">
@@ -822,6 +820,7 @@ export default function Lab2() {
           <img
             className="wd-float-right"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            alt=""
           />
           <div className="wd-float-done"></div>
         </div>
