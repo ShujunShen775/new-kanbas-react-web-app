@@ -12,6 +12,7 @@ export default function CoursesNavigation() {
     "Assignments",
     "Quizzes",
     "Grades",
+    "People"
   ];
   const path = pathname.split("/")[4]
   return (
