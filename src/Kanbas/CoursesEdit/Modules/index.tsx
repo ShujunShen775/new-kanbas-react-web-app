@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as client from "./client";
+import * as client from "../Modules/client";
 import {
   addModule,
   editModule,

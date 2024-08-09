@@ -17,3 +17,11 @@ export const updateCourse = async (course: any) => {
   const response = await axios.put(`${COURSES_API}/${course._id}`, course);
   return response.data;
 };
+export const enrollCourse = async (cid: string) => {
+  const response = await axios.post(`${COURSES_API}/enroll/${cid}`);
+  return response.data;
+};
+export const unenrollCourse = async (cid: string) => {
+  const response = await axios.post(`${COURSES_API}/unenroll/${cid}`);
+  return response.data;
+};

@@ -4,52 +4,13 @@ import KanbasNavigation from "./Navigation";
 import store from "./store";
 import { Provider } from "react-redux";
 import { Routes, Route, Navigate } from "react-router";
+import CourseList from "./CourseList";
 import Courses from "./Courses";
 import Account from "./Account";
-// import * as db from "./Database";
-import * as client from "./Courses/client";
 import ProtectedRoute from "./ProtectedRoute";
 import "./styles.css";
 
 export default function Kanbas() {
-  const [courses, setCourses] = useState<any[]>([]);
-  const [course, setCourse] = useState<any>({
-    _id: "1234",
-    name: "New Course",
-    number: "New Number",
-    startDate: "2023-09-10",
-    endDate: "2023-12-15",
-    description: "New Description",
-  });
-  const addNewCourse = async () => {
-    const newCourse = await client.createCourse(course);
-    setCourses([...courses, newCourse]);
-  };
-  const deleteCourse = async (courseId: string) => {
-    await client.deleteCourse(courseId);
-    setCourses(courses.filter((c) => c._id !== courseId));
-  };
-  const updateCourse = async () => {
-    await client.updateCourse(course);
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
-  };
-
-  const fetchCourses = async () => {
-    const courses = await client.fetchAllCourses();
-    setCourses(courses);
-  };
-  useEffect(() => {
-    fetchCourses();
-  }, []);
-
   return (
     <Provider store={store}>
       <div id="wd-kanbas" className="h-100">
@@ -65,14 +26,7 @@ export default function Kanbas() {
                 path="Dashboard"
                 element={
                   <ProtectedRoute>
-                    <Dashboard
-                      courses={courses}
-                      course={course}
-                      setCourse={setCourse}
-                      addNewCourse={addNewCourse}
-                      deleteCourse={deleteCourse}
-                      updateCourse={updateCourse}
-                    />
+                    <Dashboard />
                   </ProtectedRoute>
                 }
               />
@@ -80,7 +34,15 @@ export default function Kanbas() {
                 path="Courses/:cid/*"
                 element={
                   <ProtectedRoute>
-                    <Courses courses={courses} />
+                    <Courses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="Courses"
+                element={
+                  <ProtectedRoute>
+                    <CourseList />
                   </ProtectedRoute>
                 }
               />

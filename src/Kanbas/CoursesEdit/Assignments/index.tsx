@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import AssignmentsControls from "./AssignmentsControls";
 import { deleteAssignment, setAssignments } from "./reducer";
-import * as client from "./client";
+import * as client from "../Assignments/client";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router";

@@ -1,6 +1,6 @@
 import "./index.css";
 import { useState } from "react";
-import * as client from "./client";
+import * as client from "../Assignments/client";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useParams, useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";

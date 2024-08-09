@@ -1,17 +1,16 @@
-import CoursesNavigation from "./Navigation";
-import Modules from "./Modules";
-import Home from "./Home";
-import Assignments from "./Assignments";
-import AssignmentEditor from "./Assignments/Editor";
-import Grades from "./Grades";
-import PeopleTable from "../../Courses/People/Table";
 import { useLocation, Route, Routes, useParams } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import CoursesEdit from "../CoursesEdit";
+import CoursesView from "../CoursesView";
 import "./index.css";
 
-export default function Courses({ courses }: { courses: any[] }) {
+export default function Courses() {
+  const { courses } = useSelector((state: any) => state.coursesReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   const { cid } = useParams();
-  const course = courses.find((course) => course._id === cid);
+  const course = courses.find((course: any) => course._id === cid);
   const { pathname } = useLocation();
 
   return (
@@ -21,22 +20,11 @@ export default function Courses({ courses }: { courses: any[] }) {
         {course && course.name} &gt; {pathname.split("/")[4]}
       </h2>
       <hr />
-      <div className="d-flex">
-        <div className="d-none d-md-block">
-          <CoursesNavigation />
-        </div>
-        <div className="flex-fill main-wrapper">
-          <Routes>
-            <Route path="Home" element={<Home />} />
-            <Route path="Modules" element={<Modules />} />
-            <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            <Route path="Grades" element={<Grades />} />
-            <Route path="People" element={<PeopleTable />} />
-            <Route path="People/:uid" element={<PeopleTable />} />
-          </Routes>
-        </div>
-      </div>
+      {currentUser.role === "FACULTY" ? (
+        <CoursesEdit></CoursesEdit>
+      ) : (
+        <CoursesView></CoursesView>
+      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchProfile = async () => {
@@ -16,6 +17,15 @@ export default function Profile() {
       navigate("/Kanbas/Account/Signin");
     }
   };
+  const update = async () => {
+    try {
+      await client.updateUser(profile);
+      setError("");
+    } catch (err: any) {
+      setError(err.response.data.message);
+    }
+  };
+
   const signout = async () => {
     await client.signout();
     dispatch(setCurrentUser(null));
@@ -27,6 +37,7 @@ export default function Profile() {
   return (
     <div className="wd-profile-screen">
       <h1>Profile</h1>
+      {error && <div className="wd-error alert alert-danger">{error}</div>}
       {profile && (
         <div className="d-flex flex-column">
           <input
@@ -70,15 +81,22 @@ export default function Profile() {
           />
           <select
             className="wd-role form-control mt-2"
+            value={profile.role}
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}
           >
-            <option value="USER">User</option>{" "}
+            <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
-            <option value="FACULTY">Faculty</option>{" "}
+            <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
         </div>
       )}
+      <button
+        onClick={update}
+        className="wd-profile-btn btn btn-primary w-100  mt-2"
+      >
+        Update
+      </button>
       <button
         onClick={signout}
         className="wd-signout-btn btn btn-danger w-100 mt-2"
