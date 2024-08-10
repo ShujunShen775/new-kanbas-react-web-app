@@ -11,8 +11,9 @@ export default function PublishedList() {
   const { courses } = useSelector((state: any) => state.coursesReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const publishedCourses = courses.filter(
-    (i: any) => i.authorId === currentUser.id
+    (i: any) => i.authorId === currentUser._id
   );
+
   const [course, setCourse] = useState<any>({
     name: "New Course",
     number: "New Number",
