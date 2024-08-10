@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({
-    username: "n3",
-    password: "111",
+    username: "",
+    password: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
