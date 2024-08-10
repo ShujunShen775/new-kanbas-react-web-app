@@ -1,30 +1,35 @@
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { FaPencil } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import * as client from "./client";
 
 export default function QuizDetails() {
   const { qid, cid } = useParams();
   const navigate = useNavigate();
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
   const quiz = quizzes.find((quiz: any) => quiz._id === qid);
+  const [grade, setGrade] = useState<any>(null);
+
+  const fetchGrade = async () => {
+    const grade = await client.getGrade(qid as string);
+    setGrade(grade);
+  };
+
+  useEffect(() => {
+    fetchGrade();
+  }, []);
   return (
     <div>
+      Last Grade: {grade?.score ?? "-"}
       <button
-        className="btn btn-outline-secondary me-3"
-        onClick={() =>
-          navigate(`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}/Preview`)
-        }
-      >
-        Preview
-      </button>
-      <button
-        className="btn btn-outline-secondary "
+        className="btn btn-outline-secondary ms-2"
         onClick={() =>
           navigate(`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`)
         }
       >
         <FaPencil className="me-2" />
-        Edit
+        Take the Quiz
       </button>
       <br />
       <hr />

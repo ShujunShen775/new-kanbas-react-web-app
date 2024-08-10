@@ -52,7 +52,7 @@ export default function QuizEditor() {
   const createQuiz = async (quiz: any) => {
     try {
       const res = await client.createQuiz(cid as string, quiz);
-      const quizzes = await client.findQuestionsForQuiz(cid as string);
+      const quizzes = await client.findQuizzesForCourse(cid as string);
       dispatch(setQuizzes(quizzes));
       return res._id;
     } catch (err: any) {
@@ -64,7 +64,7 @@ export default function QuizEditor() {
   };
   const updateQuiz = async (quiz: any) => {
     await client.updateQuiz(quiz);
-    const quizzes = await client.findQuestionsForQuiz(cid as string);
+    const quizzes = await client.findQuizzesForCourse(cid as string);
     dispatch(setQuizzes(quizzes));
   };
 
@@ -82,7 +82,7 @@ export default function QuizEditor() {
     try {
       await client.createQuestion(quiz._id as string, question);
       (document.querySelector("#closeQuestion") as HTMLElement)?.click();
-      const questions = await client.findQuizzesForCourse(cid as string);
+      const questions = await client.findQuestionsForQuiz(qid as string);
       setQuestion({
         title: "New Question",
         points: 10,
@@ -480,9 +480,12 @@ export default function QuizEditor() {
             >
               + New Question
             </button>
-            <ol style={{ marginTop: 20 }}>
+            <ol
+              className="list-group list-group-numbered"
+              style={{ marginTop: 20 }}
+            >
               {questions.map((i: any, index) => (
-                <li key={index}>
+                <li className="list-group-item" key={index}>
                   <span className="me-2">{i.title}</span>
                   <FaPencil
                     className="text-primary  "
@@ -495,7 +498,7 @@ export default function QuizEditor() {
                   />
                   <br />
                   <span style={{ color: "#999", fontSize: "16px" }}>
-                    {i.type} | {i.points}
+                    {i.type} | {i.points} pts
                   </span>
                 </li>
               ))}
@@ -556,7 +559,21 @@ export default function QuizEditor() {
                           className="wd-type form-select mt-2"
                           value={question.type}
                           onChange={(e) => {
-                            setQuestion({ ...quiz, type: e.target.value });
+                            if (e.target.value === "TRUE/FALSE") {
+                              setQuestion({
+                                ...question,
+                                type: e.target.value,
+                                choice: [
+                                  { isCorrect: false, content: "True" },
+                                  { isCorrect: false, content: "False" },
+                                ],
+                              });
+                            } else {
+                              setQuestion({
+                                ...question,
+                                type: e.target.value,
+                              });
+                            }
                           }}
                         >
                           <option value="TRUE/FALSE">
@@ -619,39 +636,65 @@ export default function QuizEditor() {
                                   });
                                 }}
                               />
-                              <input
-                                className="form-control"
-                                value={i.content}
-                                onChange={(e) => {
-                                  question.choice[index].content =
-                                    e.target.value;
-                                  setQuestion({ ...question });
-                                }}
-                              />
-                              {/* <FaTrash
-                                className="text-danger me-2"
-                                onClick={() => {
-                                  question.choice.splice(index, 1);
-                                  setQuestion({ ...question });
-                                }}
-                              /> */}
+                              {question.type === "TRUE/FALSE" ? (
+                                i.content
+                              ) : (
+                                <>
+                                  <div
+                                    style={{
+                                      width: "130px",
+                                      display: "inline-block",
+                                    }}
+                                  >
+                                    {i.isCorrect
+                                      ? "Correct Answer"
+                                      : "Possible Answer"}
+                                  </div>
+                                  <input
+                                    className="form-control"
+                                    value={i.content}
+                                    style={{
+                                      width: "160px",
+                                      display: "inline-block",
+                                    }}
+                                    onChange={(e) => {
+                                      question.choice[index].content =
+                                        e.target.value;
+                                      setQuestion({ ...question });
+                                    }}
+                                  />
+                                  <FaTrash
+                                    className="text-danger ms-2"
+                                    onClick={() => {
+                                      setQuestion({
+                                        ...question,
+                                        choice: question.choice.filter(
+                                          (j, jdx) => jdx !== index
+                                        ),
+                                      });
+                                    }}
+                                  />
+                                </>
+                              )}
                             </div>
                           );
                         })}
-                        <button
-                          className="btn text-danger"
-                          onClick={() =>
-                            setQuestion({
-                              ...question,
-                              choice: [
-                                ...question.choice,
-                                { content: "New Answer", isCorrect: false },
-                              ],
-                            })
-                          }
-                        >
-                          + Add Another Answer
-                        </button>
+                        {question.type !== "TRUE/FALSE" && (
+                          <button
+                            className="btn text-danger"
+                            onClick={() =>
+                              setQuestion({
+                                ...question,
+                                choice: [
+                                  ...question.choice,
+                                  { content: "New Answer", isCorrect: false },
+                                ],
+                              })
+                            }
+                          >
+                            + Add Another Answer
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
