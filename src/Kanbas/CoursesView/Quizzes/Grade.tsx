@@ -24,7 +24,7 @@ export default function QuizGrade() {
       answers
     );
     alert(`Your Grade is:  ${grade.score}`);
-    navigate(`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`);
+    navigate(`/Kanbas/Courses/${quiz.course}/Grades`);
   };
 
   const fetchQuizzes = async () => {
@@ -49,6 +49,7 @@ export default function QuizGrade() {
     setAnswers(Array.from({ length: questions.length }, (i) => ""));
   }, [questions]);
 
+  console.log("questions :>> ", questions);
   const question = questions[number];
 
   return (
@@ -57,82 +58,87 @@ export default function QuizGrade() {
       <p>Started: {t.toString()}</p>
       <h3>Quiz Instructions</h3>
       <hr />
-      <div className="card mb-4">
-        <div className="card-header border border-light-subtle d-flex justify-content-between">
-          <span>Question {number + 1}</span>
-          <span>{question.points} pts</span>
-        </div>
-        <div className="card-body">
-          <p>{question.title}</p>
-          <div>
-            {(question.choice as any[]).map((i: any, index) => (
-              <div key={index} className="form-check">
-                {question.type !== "FILL_IN_MULTIPLE_BLANKS" ? (
-                  <>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      checked={answers[number] === i.content}
-                      onChange={(e) => {
-                        answers[number] = i.content;
-                        setAnswers([...answers]);
-                      }}
-                    />
-                    {i.content}
-                  </>
-                ) : (
-                  <input
-                    className="form-control"
-                    value={answers[number]}
-                    style={{
-                      width: "160px",
-                      display: "inline-block",
-                    }}
-                    onChange={(e) => {
-                      answers[number][index] = e.target.value;
-                      setAnswers([...answers]);
-                    }}
-                  />
-                )}
+
+      {question && (
+        <>
+          <div className="card mb-4">
+            <div className="card-header border border-light-subtle d-flex justify-content-between">
+              <span>Question {number + 1}</span>
+              <span>{question.points} pts</span>
+            </div>
+            <div className="card-body">
+              <p>{question.title}</p>
+              <div>
+                {(question.choice as any[]).map((i: any, index) => (
+                  <div key={index} className="form-check">
+                    {question.type !== "FILL_IN_MULTIPLE_BLANKS" ? (
+                      <>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={answers[number] === i.content}
+                          onChange={(e) => {
+                            answers[number] = i.content;
+                            setAnswers([...answers]);
+                          }}
+                        />
+                        {i.content}
+                      </>
+                    ) : (
+                      <input
+                        className="form-control"
+                        value={answers[number]}
+                        style={{
+                          width: "160px",
+                          display: "inline-block",
+                        }}
+                        onChange={(e) => {
+                          answers[number][index] = e.target.value;
+                          setAnswers([...answers]);
+                        }}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
+          {number < questions.length - 1 && (
+            <div className="clearfix mb-3">
+              <div className="float-end">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setNumber((v) => v + 1)}
+                >
+                  Next &gt;
+                </button>
+              </div>
+            </div>
+          )}
+          <hr />
+          <div className="clearfix mb-3">
+            <div className="float-end">
+              <button className="btn btn-danger" onClick={() => submit()}>
+                Submit Quiz
+              </button>
+            </div>
+          </div>
+          <h3>Questions</h3>
+          <ul className="list-group">
+            {questions.map((i, index) => (
+              <li
+                className={`list-group-item ${
+                  index === number ? "text-danger" : ""
+                }`}
+                key={index}
+                onClick={() => setNumber(index)}
+              >
+                Question {index + 1}
+              </li>
             ))}
-          </div>
-        </div>
-      </div>
-      {number < questions.length - 1 && (
-        <div className="clearfix mb-3">
-          <div className="float-end">
-            <button
-              className="btn btn-secondary"
-              onClick={() => setNumber((v) => v + 1)}
-            >
-              Next &gt;
-            </button>
-          </div>
-        </div>
+          </ul>
+        </>
       )}
-      <hr />
-      <div className="clearfix mb-3">
-        <div className="float-end">
-          <button className="btn btn-danger" onClick={() => submit()}>
-            Submit Quiz
-          </button>
-        </div>
-      </div>
-      <h3>Questions</h3>
-      <ul className="list-group">
-        {questions.map((i, index) => (
-          <li
-            className={`list-group-item ${
-              index === number ? "text-danger" : ""
-            }`}
-            key={index}
-            onClick={() => setNumber(index)}
-          >
-            Question {index + 1}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
