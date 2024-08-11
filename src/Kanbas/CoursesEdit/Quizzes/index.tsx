@@ -54,9 +54,9 @@ export default function Quizzes() {
       <QuizzesControls />
       <ul id="wd-assignment-list" className="list-group rounded-0 mt-3">
         <li className="wd-assignment list-group-item p-0 mb-5 fs-5 border-gray">
-          <div className="wd-assignments-title p-3 ps-2">
+          <div className="wd-assignments-title p-3 ps-2  bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
-            Assignment Quizzes
+            ASSIGNMENTS QUIZZES
           </div>
           <ul className="wd-assignments list-group rounded-0">
             {quizzes

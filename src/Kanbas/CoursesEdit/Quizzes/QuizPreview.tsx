@@ -83,18 +83,21 @@ export default function QuizGrade() {
                     {i.content}
                   </>
                 ) : (
-                  <input
-                    className="form-control"
-                    value={answers[number]}
-                    style={{
-                      width: "160px",
-                      display: "inline-block",
-                    }}
-                    onChange={(e) => {
-                      answers[number][index] = e.target.value;
-                      setAnswers([...answers]);
-                    }}
-                  />
+                  <>
+                    {index + 1}.
+                    <input
+                      className="form-control"
+                      value={answers[number][index]}
+                      style={{
+                        width: "160px",
+                        display: "inline-block",
+                      }}
+                      onChange={(e) => {
+                        answers[number][index] = e.target.value;
+                        setAnswers([...answers]);
+                      }}
+                    />
+                  </>
                 )}
               </div>
             ))}

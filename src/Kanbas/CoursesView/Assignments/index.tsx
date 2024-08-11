@@ -30,7 +30,7 @@ export default function Assignments() {
       />
       <ul id="wd-assignment-list" className="list-group rounded-0 mt-3">
         <li className="wd-assignment list-group-item p-0 mb-5 fs-5 border-gray">
-          <div className="wd-assignments-title p-3 ps-2">
+          <div className="wd-assignments-title p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
             ASSIGNMENTS
           </div>
@@ -40,13 +40,17 @@ export default function Assignments() {
               .map((assignment: any) => (
                 <li className="wd-assignment-list-item list-group-item p-3 ps-1">
                   <BsGripVertical className="me-2 fs-3" />
-                  <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{ display: "inline-flex", flexDirection: "column" }}
+                  >
                     {assignment.title}
                     <br />
-                    {assignment.description} | Not available util{" "}
-                    {assignment.available} | Due {assignment.until} |{" "}
-                    {assignment.points}
-                    pts
+                    <span style={{ color: "#999", fontSize: 16 }}>
+                      {assignment.description} | Not available util{" "}
+                      {assignment.available} | Due {assignment.until} |{" "}
+                      {assignment.points}
+                      pts
+                    </span>
                   </div>
                 </li>
               ))}

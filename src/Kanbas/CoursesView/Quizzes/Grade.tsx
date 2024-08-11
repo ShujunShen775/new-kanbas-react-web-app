@@ -46,7 +46,13 @@ export default function QuizGrade() {
     if (!questions.length) {
       return;
     }
-    setAnswers(Array.from({ length: questions.length }, (i) => ""));
+    setAnswers(
+      Array.from({ length: questions.length }, (i, index) =>
+        questions[index].type === "FILL_IN_MULTIPLE_BLANKS"
+          ? Array.from({ length: questions[index].choice.length }, () => "")
+          : ""
+      )
+    );
   }, [questions]);
 
   console.log("questions :>> ", questions);
@@ -85,18 +91,21 @@ export default function QuizGrade() {
                         {i.content}
                       </>
                     ) : (
-                      <input
-                        className="form-control"
-                        value={answers[number]}
-                        style={{
-                          width: "160px",
-                          display: "inline-block",
-                        }}
-                        onChange={(e) => {
-                          answers[number][index] = e.target.value;
-                          setAnswers([...answers]);
-                        }}
-                      />
+                      <>
+                        {index + 1}.
+                        <input
+                          className="form-control"
+                          value={answers[number][index]}
+                          style={{
+                            width: "160px",
+                            display: "inline-block",
+                          }}
+                          onChange={(e) => {
+                            answers[number][index] = e.target.value;
+                            setAnswers([...answers]);
+                          }}
+                        />
+                      </>
                     )}
                   </div>
                 ))}

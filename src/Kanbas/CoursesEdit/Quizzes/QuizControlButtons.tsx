@@ -1,7 +1,8 @@
 import { IoEllipsisVertical } from "react-icons/io5";
-import { FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
+import { BsGripVertical } from "react-icons/bs";
 
 export default function AssignmentControlButtons({
   quizId,
@@ -18,28 +19,73 @@ export default function AssignmentControlButtons({
 }) {
   return (
     <div className="float-end">
-      <FaPencil
-        onClick={(e) => {
-          e.stopPropagation();
-          editQuiz(quizId);
-        }}
-        className="text-primary me-2"
-      />
-      <FaTrash
-        className="text-danger me-2 mb-1"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteQuizModal"
-        onClick={(e) => e.stopPropagation()}
-      />
       <span
         style={{ opacity: published ? 1 : "0.6" }}
         onClick={(e) => {
           e.stopPropagation();
-          publishQuiz(quizId);
         }}
       >
         <GreenCheckmark />
       </span>
+
+      <IoEllipsisVertical
+        className="fs-4"
+        data-bs-toggle="dropdown"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      />
+      <div className="dropdown" onClick={(e) => e.stopPropagation()}>
+        <ul className="dropdown-menu" aria-labelledby="wd-publish-all-btn">
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+              editQuiz(quizId);
+            }}
+            style={{ padding: "6px 0 6px 15px" }}
+          >
+            <FaPencil className="text-primary me-2" />
+            Edit
+          </li>
+          <li
+            onClick={(e) => e.stopPropagation()}
+            data-bs-toggle="modal"
+            data-bs-target="#deleteQuizModal"
+            style={{ padding: "6px 0 6px 15px" }}
+          >
+            <FaTrash className="text-danger me-2 mb-1" />
+            Delete
+          </li>
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+              publishQuiz(quizId);
+            }}
+            style={{ padding: "6px 0 6px 15px" }}
+          >
+            <GreenCheckmark />
+            Publish
+          </li>
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            style={{ padding: "6px 0 6px 15px" }}
+          >
+            <FaPlus className="text-danger me-2 mb-1" />
+            Copy
+          </li>
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            style={{ padding: "6px 0 6px 15px" }}
+          >
+            <BsGripVertical className="text-danger me-2 mb-1" />
+            Sort
+          </li>
+        </ul>
+      </div>
       <div
         className="modal fade"
         id="deleteQuizModal"

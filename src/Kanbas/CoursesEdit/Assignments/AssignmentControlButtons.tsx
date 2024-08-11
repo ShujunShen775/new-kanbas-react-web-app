@@ -16,7 +16,7 @@ export default function AssignmentControlButtons({
     <div className="float-end">
       <FaPencil
         onClick={() => editAssignment(assignmentId)}
-        className="text-primary me-3"
+        className="text-primary me-2"
       />
       <FaTrash
         className="text-danger me-2 mb-1"

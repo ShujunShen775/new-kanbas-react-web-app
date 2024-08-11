@@ -17,7 +17,7 @@ export default function ModulesControlButtons({
     <div className="float-end">
       <FaPencil
         onClick={() => editModule(moduleId)}
-        className="text-primary me-3"
+        className="text-primary me-2"
       />
       <FaTrash
         className="text-danger me-2 mb-1"

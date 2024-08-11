@@ -30,6 +30,7 @@ export default function QuizEditor() {
     description: "New question description",
     choice: [] as any[],
     type: "MULTIPLE_CHOICE",
+    _id: null,
   });
   const [error, setError] = useState("");
 
@@ -80,7 +81,9 @@ export default function QuizEditor() {
 
   const createQuestion = async () => {
     try {
-      await client.createQuestion(quiz._id as string, question);
+      await (question._id
+        ? client.updateQuestion(question._id, question)
+        : client.createQuestion(quiz._id as string, question));
       (document.querySelector("#closeQuestion") as HTMLElement)?.click();
       const questions = await client.findQuestionsForQuiz(qid as string);
       setQuestion({
@@ -89,6 +92,7 @@ export default function QuizEditor() {
         description: "New question description",
         choice: [] as any[],
         type: "MULTIPLE_CHOICE",
+        _id: null,
       });
       dispatch(setQuestions(questions));
     } catch (err: any) {
@@ -559,20 +563,35 @@ export default function QuizEditor() {
                           className="wd-type form-select mt-2"
                           value={question.type}
                           onChange={(e) => {
-                            if (e.target.value === "TRUE/FALSE") {
-                              setQuestion({
-                                ...question,
-                                type: e.target.value,
-                                choice: [
-                                  { isCorrect: false, content: "True" },
-                                  { isCorrect: false, content: "False" },
-                                ],
-                              });
-                            } else {
-                              setQuestion({
-                                ...question,
-                                type: e.target.value,
-                              });
+                            switch (e.target.value) {
+                              case "TRUE/FALSE":
+                                setQuestion({
+                                  ...question,
+                                  type: e.target.value,
+                                  choice: [
+                                    { isCorrect: false, content: "True" },
+                                    { isCorrect: false, content: "False" },
+                                  ],
+                                });
+                                break;
+                              case "MULTIPLE_CHOICE":
+                                setQuestion({
+                                  ...question,
+                                  type: e.target.value,
+                                });
+                                break;
+                              case "FILL_IN_MULTIPLE_BLANKS":
+                                setQuestion({
+                                  ...question,
+                                  type: e.target.value,
+                                  choice: [
+                                    { isCorrect: true, content: "" },
+                                    { isCorrect: true, content: "" },
+                                  ],
+                                });
+                                break;
+                              default:
+                                break;
                             }
                           }}
                         >

@@ -13,26 +13,26 @@ export default function AssignmentEditor() {
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const [assignment, setAssignment] = useState(
     assignments.find((assignment: any) => assignment._id === aid) || {
-      title: "",
-      description: "",
-      points: "",
-      assignTo: "",
+      title: "New Assignment",
+      description: "New Assignment Description",
+      points: "100",
       due: "",
       available: "",
       until: "",
     }
   );
 
-  const createAssignment = async (aid: any) => {
-    const newAssignment = await client.createAssignment(
-      aid as string,
-      assignment
-    );
-    dispatch(addAssignment(newAssignment));
+  const createAssignment = async () => {
+    try {
+      await client.createAssignment(cid as string, assignment);
+      navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    } catch (error) {}
   };
-  const saveAssignment = async (module: string) => {
-    await client.updateAssignment(module);
-    dispatch(updateAssignment(module));
+  const saveAssignment = async () => {
+    try {
+      await client.updateAssignment(assignment);
+      navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    } catch (error) {}
   };
 
   return (
@@ -242,12 +242,7 @@ export default function AssignmentEditor() {
           <button
             className="btn btn-danger"
             onClick={() => {
-              aid === "tmp"
-                ? createAssignment({
-                    ...assignment,
-                    course: cid,
-                  })
-                : saveAssignment(assignment);
+              aid === "tmp" ? createAssignment() : saveAssignment();
               navigate(-1);
             }}
           >
