@@ -36,6 +36,9 @@ export const findQuestionsForQuiz = async (quizId: string) => {
   return response.data;
 };
 export const createGrade = async (quizId: string, answers: any) => {
-  const response = await axios.post(`${QUIZZES_API}/${quizId}/grade`, answers);
+  const response = await axios.post(
+    `${QUIZZES_API}/${quizId}/preview`,
+    answers
+  );
   return response.data;
 };

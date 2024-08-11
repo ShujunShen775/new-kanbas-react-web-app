@@ -18,8 +18,8 @@ export default function QuizGrade() {
   const [number, setNumber] = useState(0);
 
   const submit = async () => {
-    const grade = await client.createGrade(qid as string, answers);
-    alert(`Your Grade is:  ${grade.score}`);
+    const score = await client.createGrade(qid as string, answers);
+    alert(`Your Grade is:  ${score}`);
     navigate(`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}/Details`);
   };
 
