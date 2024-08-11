@@ -5,6 +5,7 @@ import * as client from "./client";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router";
+import QuizControlButtons from "./QuizControlButtons";
 import "./index.css";
 
 export default function Quizzes() {
@@ -68,6 +69,7 @@ export default function Quizzes() {
                       | {quiz.questions?.length || 0} questions
                     </span>
                   </div>
+                  <QuizControlButtons published />
                 </li>
               ))}
           </ul>
