@@ -102,7 +102,7 @@ export default function QuizEditor() {
 
   useEffect(() => {
     fetchQuizzes();
-    fetchQuestions();
+    qid !== "tmp" && fetchQuestions();
   }, []);
 
   return (
